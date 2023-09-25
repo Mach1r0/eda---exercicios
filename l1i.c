@@ -1,24 +1,28 @@
-#include<stdio.h>
+#include <stdio.h>
 
-int main(){
-    int execedeu, n, c, s, e, pesototal = 0;
+int main() {
+    int N, C;
+    scanf("%d %d", &N, &C);
 
-    scanf("%d %d", &n, &c);
+    int ocupacao = 0;
+    int excedeu = 0; 
 
-    for (int i = 0; i < n; i++)
-    {
-    scanf("%d %d", &s, &e);
-    pesototal += e - s;
+    for (int i = 0; i < N; i++) {
+        int S, E;
+        scanf("%d %d", &S, &E);
 
-    if (pesototal > c){
-     execedeu = 1;
-    }}
+        ocupacao = ocupacao - S + E;
 
-    if (execedeu == 1)
+        if (ocupacao > C) {
+            excedeu = 1;
+        }
+    }
+
+    if (excedeu) {
         printf("S\n");
-
-    else
+    } else {
         printf("N\n");
+    }
 
     return 0;
 }

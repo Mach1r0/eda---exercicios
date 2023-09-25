@@ -1,45 +1,36 @@
 #include <stdio.h>
-#include <string.h>
 
 int main() {
-    int teste = 1;
-    int resultados[100];
-    char vencedores[100][10]; 
+    int R; 
+    int caso = 1; 
 
     while (1) {
-        int R;
         scanf("%d", &R);
 
         if (R == 0) {
-            break;
+            break; 
         }
 
-        int figaldo = 0;
-        int figbeto = 0;
+        int Aldo = 0;
+        int Beto = 0;
 
-         for (int i = 0; i < R; i++) {
-            scanf("%d %d", &figaldo, &figbeto);
+        for (int i = 0; i < R; i++) {
+            int A, B;
+            scanf("%d %d", &A, &B);
 
-            if (figaldo > figbeto) 
-                figaldo += 1;
-             else if (figbeto > figaldo) 
-                figbeto += 1;
-            
+            Aldo += A;
+            Beto += B;
         }
 
-        if (figaldo > figbeto) {
-            strcpy(vencedores[teste - 1], "Aldo");
+        printf("Teste %d\n", caso);
+        if (Aldo > Beto) {
+            printf("Aldo\n");
         } else {
-            strcpy(vencedores[teste - 1], "Beto");
+            printf("Beto\n");
         }
+        printf("\n");
 
-        resultados[teste - 1] = R;
-        teste++;
-    }
-
-    for (int i = 0; i < teste - 1; i++) {
-        printf("Teste %d\n", i + 1);
-        printf("%s\n\n",vencedores[i]);
+        caso++;
     }
 
     return 0;
