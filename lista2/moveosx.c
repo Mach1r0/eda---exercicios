@@ -1,38 +1,36 @@
 #include <stdio.h>
-#include <string.h>
 
-void moveX(char str[], int len) {
-    int xCount = 0;
-    int currentIndex = 0;
-
-    // Count 'x' characters and skip them while copying
-    for (int i = 0; i < len; i++) {
-        if (str[i] != 'x') {
-            str[currentIndex++] = str[i];
-        } else {
-            xCount++;
+void move_xs(char *str, int i, int j) {
+    // Caso base: se o caractere atual for nulo, terminamos a recursão
+    if (str[i] == '\0') {
+        // Adicione os caracteres 'x' no final
+        for (int k = 0; k < j; k++) {
+            putchar('x');
         }
-    }
-    
-    // Fill the end of the string with 'x' characters
-    for (int i = 0; i < xCount; i++) {
-        str[currentIndex++] = 'x';
+        putchar('\n');
+        return;
     }
 
-    // Null-terminate the string
-    str[currentIndex] = '\0';
+    // Se o caractere atual não é 'x', imprima-o
+    if (str[i] != 'x') {
+        putchar(str[i]);
+    } else {
+        // Se o caractere atual é 'x', aumente o contador 'j'
+        j++;
+    }
+
+    // Chame a função recursivamente para o próximo caractere
+    move_xs(str, i + 1, j);
 }
 
 int main() {
-    char str[101];
-    scanf("%s", str);
+    char string[1001]; // Suponhamos que a entrada terá no máximo 1000 caracteres
 
-    int len = strlen(str);
+    // Receba a entrada do usuário
+    scanf("%s", string);
 
-    // Call the 'moveX' function
-    moveX(str, len);
-
-    printf("%s\n", str);
+    // Chame a função recursiva para mover os 'x'
+    move_xs(string, 0, 0);
 
     return 0;
 }
