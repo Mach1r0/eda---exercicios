@@ -1,49 +1,38 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+// declarate the function
 typedef struct celula {
     int dado;
+    // call the function again, to pointer to prox 
     struct celula* prox;
 } celula;
 
+// call the function and pass the arguments, the first argument is the linked list
+// and the second is the number to be searched
 celula* busca(celula* le, int x) {
+    // runing the list until the empyt
     while(le != NULL) {
+        // when we find the number, we return to list
         if (le->dado == x) {
             return le;
-        }
+        }// if the number of the list don't for the 'x' we passe to next value of the list
         le = le->prox; 
     }
+    //if the number don't wa be on the list, return null
     return NULL;
 }
-
+// call the function
 celula* busca_rec(celula* le, int x) {
-    while(le != NULL) {
-        if (le->dado == x) {
-            return le;
-        }
-        le = le->prox; 
+    // Base case: End of the list reached (le is NULL)
+    if (le == NULL) {
+        return NULL;
     }
-    return NULL;
-}
-int main() {
-    celula *le, n1, n2, n3, n4;
-    n1.dado = 0;
-    n2.dado = 3;
-    n3.dado = 4;
-    n4.dado = 56;
-
-    n1.prox = &n2;
-    n2.prox = &n3;
-    n3.prox = &n4;
-    n4.prox = NULL;
-
-    int x;
-    scanf("%d", &x);
-    celula* resultado = busca(&n1, x);
-    if (resultado != NULL) {
-        printf("Valor encontrado: %d\n", resultado->dado);
-    } else {
-        printf("Valor não encontrado\n");
+    // if the data of list for the 'x', we return to the list;
+    if (le->dado == x) {
+        return le; 
+    }// else the call function again to the next value, until list to be empty 
+    else {
+        return busca_rec(le->prox, x);
     }
-    return 0;
 }
