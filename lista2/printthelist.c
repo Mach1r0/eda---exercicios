@@ -6,20 +6,26 @@ typedef struct celula {
     struct celula *prox;
 } celula;
 
-void imprime(celula *le) {
-    while (le != NULL) {
-        printf("%d ", le->dado); // Print the data in the current node
-        le = le->prox; // Move to the next node
+void imprime (celula *le) {
+    celula *temp = le;
+    temp = temp->prox;
+    while (temp != NULL){
+        printf("%d -> ", temp->dado);
+        temp = temp->prox;
+    }
+    if (temp == NULL){
+        printf("NULL\n");
     }
 }
 
-void imprime_rec(celula *le) {
-    if (le == NULL) {
+void imprime_rec (celula *le) {
+    celula *temp = le;
+    if (temp == NULL){
+        printf("NULL\n");
         return;
     }
-
-    printf("%d ", le->dado);
-    imprime_rec(le->prox);
+    if (temp ->dado != 0){
+        printf("%d -> ", temp->dado);
+    }
+    imprime_rec(temp->prox);    
 }
-
-
