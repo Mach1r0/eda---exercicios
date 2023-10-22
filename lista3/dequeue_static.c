@@ -8,6 +8,7 @@ int N, p, u;
 
 
 int desenfileira(fila *f, int *y) {
+    
     if (f->p == f->u) {
         return 0; 
     }
