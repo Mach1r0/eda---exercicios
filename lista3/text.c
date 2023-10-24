@@ -1,22 +1,22 @@
-#include <stdio.h>
-#include <stdlib.h>
+#include<stdio.h>
+#include<stdlib.h>
 
-typedef struct celula {
-    int dado;
-    struct celula *prox;
-} celula;
+typedef struct no {
+int dado;
+struct no *esq, *dir;
+} no;
 
-int desenfileira(celula *f, int *y) {
-    if (f->prox == NULL) {
-        return 0; 
-    }
-
-    celula *temp = f->prox; 
-    *y = temp->dado; 
-
-    f->prox = temp->prox;
-    free(temp); 
-
-    return 1; 
+void pre_ordem (no *raiz){
+p_pilha p; /* pilha de p_no */
+p = criar_pilha();
+empilhar(p, raiz);
+while(!pilha_vazia(p)) {
+raiz = desempilhar(p);
+if (raiz != NULL) {
+empilhar(p, raiz->dir);
+empilhar(p, raiz->esq);
+ printf("%d ", raiz->dado); /* visita raiz */
+ }
+ }
+ destruir_pilha(p);
 }
-
