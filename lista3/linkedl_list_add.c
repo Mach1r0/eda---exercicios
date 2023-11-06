@@ -11,7 +11,5 @@ celula *enfileira (celula *f, int x){
     
     else{
         celula *temp = f->dado;
-        
-        
     }
 }

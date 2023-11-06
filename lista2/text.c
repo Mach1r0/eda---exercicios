@@ -1,19 +1,29 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int somaDosDigitos(int num) {
-    if (num == 0) {
-        return 0;  // Caso base: nenhum dígito, retorno 0.
-    } else {
-        return num % 10 + somaDosDigitos(num / 10);  // Soma o último dígito com a soma dos restantes.
+typedef struct celula {
+    int dado;
+    struct celula *prox;
+} celula;
+
+void imprime(celula *le) {
+    celula *pl = le;
+    pl = pl->prox;
+    while (pl != NULL) {
+        printf("%d -> ", pl->dado);
+        pl = pl->prox;
+    }if (pl == NULL){
+    printf("NULL\n");
     }
 }
-
-int main() {
-    int numero;
-    scanf("%d", &numero);
-
-    int resultado = somaDosDigitos(numero);
-    printf("%d\n", resultado);
-
-    return 0;
+void imprime_rec(celula *le) {
+    celula *pl = le;
+    if (pl== NULL) {
+        printf("NULL\n");
+        return;
+    } else {
+        printf("%d -> ", pl->dado);
+    }
+        imprime_rec(pl->prox);
+    return;
 }
