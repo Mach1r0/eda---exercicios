@@ -1,0 +1,142 @@
+.data
+nvoos: .space 404  # Adjust the size if needed to make it word-aligned
+result_string: .asciiz "Result: "
+space_string:  .asciiz " "
+newline_string: .asciiz "\n"
+test_string:   .asciiz "Teste "
+
+.text
+main:
+    li $t4, 101       # Array size
+    li $t1, 1         # Initialize teste to 1
+    li $t2, 0         # Initialize index i to 0
+
+while_input:
+    # Read a and v
+    li $v0, 5
+    syscall
+    move $a0, $v0
+    li $v0, 5
+    syscall
+
+    # Check if a is greater than 0
+    bgtz $a0, initialize_nvoos
+
+    # If a is not greater than 0, exit the program
+    j exit_program
+
+initialize_nvoos:
+    # Initialize nvoos array to 0
+    li $t3, 0
+    la $t0, nvoos
+
+    initialize_loop:
+        sw $t3, 0($t0)
+        addi $t0, $t0, 4
+        addi $t2, $t2, 1
+        bne $t2, $t4, initialize_loop
+
+    # Reset i
+    li $t2, 0
+
+read_flights:
+    # Read x and y
+    li $v0, 5
+    syscall
+    move $s0, $v0
+    li $v0, 5
+    syscall
+    move $s1, $v0
+
+    # Check if v is greater than 0
+    bgtz $a1, count_flights
+
+    # If v is not greater than 0, go to the next iteration
+    j next_iteration
+
+count_flights:
+    # Increment nvoos[x]
+    lw $t5, nvoos
+    add $t6, $t5, $s0
+    lw $t7, 0($t6)
+    addi $t7, $t7, 1
+    sw $t7, 0($t6)
+
+    # Increment nvoos[y]
+    lw $t5, nvoos
+    add $t6, $t5, $s1
+    lw $t7, 0($t6)
+    addi $t7, $t7, 1
+    sw $t7, 0($t6)
+
+next_iteration:
+    # Decrement v and increment i
+    addi $a1, $a1, -1
+    addi $t2, $t2, 1
+    bnez $a1, read_flights
+
+find_max_loop:
+    lw $t9, nvoos
+    add $t0, $t9, $t2   # Corrected to use $t2
+    lw $t9, 0($t0)      # Change from $t11 to $t9
+    bgt $t9, $t8, update_max
+    j skip_update_max
+
+update_max:
+    move $t8, $t9
+
+skip_update_max:
+    addi $t2, $t2, 1
+    bne $t2, $t4, find_max_loop
+
+print_result:
+    # Print "Teste" and the current value of teste
+    li $v0, 4
+    la $a0, test_string
+    syscall
+    li $v0, 1
+    move $a0, $t1
+    syscall
+
+    # Print newline
+    li $v0, 4
+    la $a0, newline_string
+    syscall
+
+    # Print the indices with the maximum value in nvoos array
+    li $v0, 4
+    la $a0, result_string
+    syscall
+
+    li $t2, 1
+print_indices_loop:
+    lw $t9, nvoos
+    add $t0, $t9, $t2   # Corrected to use $t2
+    lw $t9, 0($t0)      # Change from $t11 to $t9
+    bne $t9, $t8, skip_print
+    li $v0, 1
+    move $a0, $t2
+    syscall
+
+    # Print space
+    li $v0, 4
+    la $a0, space_string
+    syscall
+
+    skip_print:
+    addi $t2, $t2, 1
+    bne $t2, $t4, print_indices_loop
+
+    # Print newline
+    li $v0, 4
+    la $a0, newline_string
+    syscall
+
+    # Increment teste and go to the next iteration
+    addi $t1, $t1, 1
+    j while_input
+
+exit_program:
+    # Exit the program
+    li $v0, 10
+    syscall

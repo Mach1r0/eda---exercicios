@@ -12,18 +12,19 @@ void imprime(celula *le) {
     while (pl != NULL) {
         printf("%d -> ", pl->dado);
         pl = pl->prox;
-    }if (pl == NULL){
-    printf("NULL\n");
     }
+    printf("NULL\n");
+    return 0;
 }
+
 void imprime_rec(celula *le) {
     celula *pl = le;
     if (pl== NULL) {
         printf("NULL\n");
-        return;
-    } else {
+        return 0;
+    } else if(pl->dado != 0) {
         printf("%d -> ", pl->dado);
-    }
         imprime_rec(pl->prox);
-    return;
+    }
+    return 0;
 }
