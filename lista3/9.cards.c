@@ -1,101 +1,83 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-// Define a structure for a node in the linked list
-typedef struct node {
+struct Node {
     int data;
-    struct node *next;
-} Node;
+    struct Node* next;
+};
 
-// Define a structure for a queue using linked list
-typedef struct queue {
-    Node *front;
-    Node *rear;
-} Queue;
+struct Queue {
+    struct Node* front;
+    struct Node* rear;
+};
 
-// Function to initialize an empty queue
-Queue *initializeQueue() {
-    Queue *queue = (Queue*)malloc(sizeof(Queue));
-    queue->front = NULL;
-    queue->rear = NULL;
+struct Queue* createQueue() {
+    struct Queue* queue = (struct Queue*)malloc(sizeof(struct Queue));
+    queue->front = queue->rear = NULL;
     return queue;
 }
 
-// Function to enqueue (push) a new element into the queue
-void enqueue(Queue *q, int data) {
-    Node *newNode = (Node*)malloc(sizeof(Node));
+void enqueue(struct Queue* queue, int data) {
+    struct Node* newNode = (struct Node*)malloc(sizeof(struct Node));
     newNode->data = data;
     newNode->next = NULL;
-    
-    if (q->rear == NULL) {
-        q->front = newNode;
-        q->rear = newNode;
-    } else {
-        q->rear->next = newNode;
-        q->rear = newNode;
+
+    if (queue->rear == NULL) {
+        queue->front = queue->rear = newNode;
+        return;
     }
+
+    queue->rear->next = newNode;
+    queue->rear = newNode;
 }
 
-// Function to dequeue (pop) an element from the queue
-int dequeue(Queue *q) {
-    if (q->front == NULL) {
-        // Queue is empty
-        return -1; // Assuming -1 represents an invalid value
-    }
-    
-    int data = q->front->data;
-    Node *temp = q->front;
-    
-    q->front = q->front->next;
+void dequeue(struct Queue* queue) {
+    if (queue->front == NULL)
+        return;
+
+    struct Node* temp = queue->front;
+
+    queue->front = queue->front->next;
+
+    if (queue->front == NULL)
+        queue->rear = NULL;
+
     free(temp);
-    
-    if (q->front == NULL) {
-        q->rear = NULL;
-    }
-    
-    return data;
 }
 
-// Function to check if the queue is empty
-int isEmpty(Queue *q) {
-    return q->front == NULL;
+int front(struct Queue* queue) {
+    if (queue->front == NULL)
+        return -1;
+
+    return queue->front->data;
 }
 
 int main() {
-    int numPlayers, i, card, roundCount = 0;
-    Queue *cardQueue;
-
-    cardQueue = initializeQueue();
-
-    do {
-        // Input the number of players
-        scanf("%d", &numPlayers);
-
-        if (numPlayers) {
-            roundCount = numPlayers;
-
-            // Initialize the queue with cards
-            for (i = 1; i <= numPlayers; i++) {
-                enqueue(cardQueue, i);
-            }
-
-            // Display discarded cards
-            printf("Discarded cards:");
-
-            while (roundCount != 1) {
-                printf(" %d", dequeue(cardQueue));
-                enqueue(cardQueue, dequeue(cardQueue));
-
-                if (roundCount != 2)
-                    printf(",");
-                roundCount--;
-            }
-
-            // Display remaining card
-            if (!isEmpty(cardQueue))
-                printf("\nRemaining card: %d\n", dequeue(cardQueue));
+    int n;
+    struct Queue* myqueue = createQueue();
+    while (scanf("%d", &n) == 1) {
+        if (n == 0)
+            break;
+        for (int i = 0; i < n; i++) {
+            enqueue(myqueue, i + 1);
         }
-    } while (numPlayers != 0);
-
+        int i = n;
+        printf("Cartas descartadas: ");
+        while (i != 1) {
+            int dis = front(myqueue);
+            printf("%d", dis);
+            if (i > 2) {
+                printf(", ");
+            }
+            dequeue(myqueue);
+            i--;
+            int top = front(myqueue);
+            enqueue(myqueue, top);
+            dequeue(myqueue);
+        }
+        printf("\nCarta restante: %d\n", front(myqueue));
+        myqueue = createQueue();
+    }
     return 0;
 }
+
