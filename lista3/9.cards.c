@@ -1,64 +1,101 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
-    int *v; // Vetor que representa a pilha
-    int topo; // Índice do topo da pilha
-    int N; // Tamanho da pilha
-} pilha;
+// Define a structure for a node in the linked list
+typedef struct node {
+    int data;
+    struct node *next;
+} Node;
 
-void inicializa_pilha(pilha *p, int N) {
-    p->v = (int *) malloc(N * sizeof(int));
-    p->topo = -1;
-    p->N = N;
+// Define a structure for a queue using linked list
+typedef struct queue {
+    Node *front;
+    Node *rear;
+} Queue;
+
+// Function to initialize an empty queue
+Queue *initializeQueue() {
+    Queue *queue = (Queue*)malloc(sizeof(Queue));
+    queue->front = NULL;
+    queue->rear = NULL;
+    return queue;
 }
 
-void empilha(pilha *p, int x) {
-    p->topo++;
-    p->v[p->topo] = x;
+// Function to enqueue (push) a new element into the queue
+void enqueue(Queue *q, int data) {
+    Node *newNode = (Node*)malloc(sizeof(Node));
+    newNode->data = data;
+    newNode->next = NULL;
+    
+    if (q->rear == NULL) {
+        q->front = newNode;
+        q->rear = newNode;
+    } else {
+        q->rear->next = newNode;
+        q->rear = newNode;
+    }
 }
 
-int desempilha(pilha *p) {
-    int x = p->v[p->topo];
-    p->topo--;
-    return x;
+// Function to dequeue (pop) an element from the queue
+int dequeue(Queue *q) {
+    if (q->front == NULL) {
+        // Queue is empty
+        return -1; // Assuming -1 represents an invalid value
+    }
+    
+    int data = q->front->data;
+    Node *temp = q->front;
+    
+    q->front = q->front->next;
+    free(temp);
+    
+    if (q->front == NULL) {
+        q->rear = NULL;
+    }
+    
+    return data;
+}
+
+// Function to check if the queue is empty
+int isEmpty(Queue *q) {
+    return q->front == NULL;
 }
 
 int main() {
-    int N;
-    scanf("%d", &N);
+    int numPlayers, i, card, roundCount = 0;
+    Queue *cardQueue;
 
-    pilha p;
-    inicializa_pilha(&p, N);
+    cardQueue = initializeQueue();
 
-    // Empilha as cartas na ordem inversa
-    for (int i = N; i >= 1; i--) {
-        empilha(&p, i);
-    }
+    do {
+        // Input the number of players
+        scanf("%d", &numPlayers);
 
-    int descartadas[100]; // Array para armazenar as cartas descartadas
-    int descartadas_count = 0; // Contador de cartas descartadas
+        if (numPlayers) {
+            roundCount = numPlayers;
 
-    printf("Cartas descartadas: ");
-    while (p.topo > 0) {
-        // Descarta a carta do topo
-        descartadas[descartadas_count] = desempilha(&p);
-        descartadas_count++;
+            // Initialize the queue with cards
+            for (i = 1; i <= numPlayers; i++) {
+                enqueue(cardQueue, i);
+            }
 
-        // Move a próxima carta para a base da pilha
-        empilha(&p, desempilha(&p));
-    }
+            // Display discarded cards
+            printf("Discarded cards:");
 
-    // Imprime a sequência de cartas descartadas
-    for (int i = 0; i < descartadas_count - 1; i++) {
-        printf("%d, ", descartadas[i]);
-    }
-    printf("%d\n", descartadas[descartadas_count - 1]);
+            while (roundCount != 1) {
+                printf(" %d", dequeue(cardQueue));
+                enqueue(cardQueue, dequeue(cardQueue));
 
-    // A última carta é a única que sobrou na pilha
-    printf("Carta restante: %d\n", p.v[0]);
+                if (roundCount != 2)
+                    printf(",");
+                roundCount--;
+            }
 
-    free(p.v);
+            // Display remaining card
+            if (!isEmpty(cardQueue))
+                printf("\nRemaining card: %d\n", dequeue(cardQueue));
+        }
+    } while (numPlayers != 0);
 
     return 0;
 }
