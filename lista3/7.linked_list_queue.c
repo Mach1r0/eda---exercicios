@@ -1,31 +1,26 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct celula {
+typedef struct celula{
     int dado;
     struct celula *prox;
 } celula;
 
-void enfileira(celula **f, int x) {
-    celula *temp = (celula*)malloc(sizeof(celula));
-    if(temp == NULL) {
-        return;
-    }
-    temp->dado = x;
-    temp->prox = (*f == NULL) ? temp : (*f)->prox;
-    if(*f != NULL) {
-        (*f)->prox = temp;
-    }
-    *f = temp; // The new node is now the rear of the queue.
+void enfileira (celula **f, int x){
+    celula *temp = malloc(sizeof(celula));
+    temp->prox = (*f)->prox;
+    (*f)->prox = temp;
+    (*f)->dado = x;
+    (*f) = temp;
 }
 
-int desenfileira(celula **f, int *y) {
-    if(*f == NULL) {
-        return 0; // The queue is empty.
-    }
-    celula *front = (*f)->prox;
-    *y = front->dado;
-    (*f)->prox = (front == *f) ? NULL : front->prox;
-    free(front);
-    return 1; // The dequeue operation was successful.
+int desenfileira(celula *f, int *y){
+    celula *temp = f->prox;
+    *y = temp->dado;
+    if  (f->prox == f)
+     return 0;
+
+    else
+         f->prox = temp->prox;
+    return 1;
 }
