@@ -3,16 +3,21 @@
 #define Item int
 #define exch(a, b) { Item t = a; a = b; b = t; }
 
-int ordena(Item *v, int n) {
-      for (int i = 0; i < n - 1; i++)
-    {
-        if (arr[i] > arr[i + 1]) {
-            swap(arr, i, i + 1);
-        }
-    }
- 
-    if (n - 1 > 1) {
-        bubbleSort(arr, n - 1);
-    }
+void shift_element(Item *v, int i) {
+    if (i <= 0)
+        return;
 
+    if (v[i] < v[i - 1]) {
+        exch(v[i], v[i - 1]);
+        shift_element(v, i - 1);    
+    }
+}
+
+void ordena(Item *v, int n) {
+    if (n <= 1)
+        return;
+
+    ordena(v, n - 1);
+
+    shift_element(v, n - 1);
 }
