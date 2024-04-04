@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)https://moj.naquadah.com.br/contests/jl_eda2_f1_2024_1/pesquisa-instrucoes.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Pesquisa de instruções</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="./Pesquisa de instruções_files/pandoc.css">
+<style type="text/css">.resize-observer[data-v-8859cc6c]{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border:none;background-color:transparent;pointer-events:none;display:block;overflow:hidden;opacity:0}.resize-observer[data-v-8859cc6c] object{display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1}</style></head>
+<body ap-style="">
+<header id="title-block-header">
+<h1 class="title">Pesquisa de instruções</h1>
+</header>
+<p>A equipe do Fórum de GCC e Assemblers (FGA) está desenvolvendo uma ferramenta de engenharia reversa que, dado um código em linguagem de máquina, deseja convertê-lo novamente num código em linguagem de alto nível (alguma das quais o GCC dá suporte). Há inúmeros módulos que precisam ser desenvolvidos, e você faz parte da equipe de desenvolvimento. O gerente do projeto te designou a seguinte tarefa: você tem que desenvolver um programa que lê o código de uma instrução em linguagem de máquina e devolve a correspondente da linguagem de alto nível. Por exemplo, se o seu programa ler o código <code>20</code>, ele deve devolver o <code>for</code>. Como você acabou de aprender um algoritmo de busca bem eficiente, você decide fazer um programa que carrega na memória todas as instruções, e seus respectivos códigos, e depois responde às pesquisas demandadas ao seu programa.</p>
+<h2 id="entrada">Entrada</h2>
+<p>A entrada é composta de diversas linhas. A primeira linha contém um inteiro <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> que determina quantas instruções você precisa carregar na memória. As <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>n</mi><annotation encoding="application/x-tex">n</annotation></semantics></math> linhas seguintes contém um inteiro e uma palavra que caracterizam uma instrução: o primeiro é o código da instrução, e a segunda a palavra-chave com, no máximo, 15 caracteres. As demais linhas são inteiros que correspondem aos códigos de instruções para os quais você precisa determinar a palavra-chave correspondente. A entrada termina com EOF.</p>
+<h2 id="saída">Saída</h2>
+<p>A saída é composta pela mesma quantidade de consultas feitas na entrada. Para cada inteiro consultado, você deve imprimir a palavra-chave correspondente. Se a palavra chave não fizer parte do conjunto de instruções, você deve imprimir <code>undefined</code>.</p>
+<h3 id="exemplo-de-entrada">Exemplo de entrada</h3>
+<pre><code>5
+220 while
+954 switch
+344 for
+104 if
+858 case
+344
+468
+104
+220
+948
+732
+858
+564
+104
+954</code></pre>
+<h3 id="exemplo-de-saída">Exemplo de saída</h3>
+<pre><code>for
+undefined
+if
+while
+undefined
+undefined
+case
+undefined
+if
+switch</code></pre>
+<div id="footer">
+<p>Author: John L. Gardenghi</p>
+</div>
+
+
+<div class="ap-ext ap-ext-alibaba_search_by_image"><div class="ap-base ap-base--ltr ap-theme--dark skiptranslate"><!----><!----><!----><div><!----><div class="ap-sbi"><!----><!----><div class="ap-sbi-aside"><!----><div class="ap-sbi-aside-btn-minimize" style="display: none;"><img src="https://moj.naquadah.com.br/contests/jl_eda2_f1_2024_1/pesquisa-instrucoes.html" class="ap-sbi-img-thumb"><i class="ap-sbi-aside-btn-minimize__icon ap-icon-chevron-right"></i></div><!----></div><!----></div><div class="ap-sbi-compare-bar-wrapper"><div class="ap-sbi-compare-bar__inner"><div class="ap-sbi-compare-bar-compared-list-wrapper"><div class="ap-sbi-compare-bar-next ap-sbi-compare-bar-next__prev ap-icon-chevron-left ap-is-disabled"></div><div class="ap-sbi-compare-bar-compared-list-container"><div class="ap-sbi-compare-bar-compared-list" style="width: 1000%; height: 100%; transform: translate3d(0px, 0px, 0px);"></div><!----></div><div class="ap-sbi-compare-bar-next ap-sbi-compare-bar-next__next ap-icon-chevron-right ap-is-disabled"></div></div><div class="ap-sbi-compare-bar-ctrls ap-sbi-compare-bar-ctrls__compare ap-is-disabled"> Comparar (0/20) </div><div class="ap-sbi-compare-bar-ctrls ap-sbi-compare-bar-ctrls__clear ap-is-disabled"> Limpar tudo </div><div title="Fechar" class="ap-sbi-compare-bar-ctrls ap-sbi-compare-bar-ctrls__close ap-icon-close"></div></div></div><!----></div><!----><div></div><!----><div></div><!----><!----><div></div><div></div><!----><div></div></div></div></body></html>

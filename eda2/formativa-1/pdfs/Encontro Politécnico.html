@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<!-- saved from url=(0079)https://moj.naquadah.com.br/contests/jl_eda2_f1_2024_1/encontropolitecnico.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="" xml:lang=""><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  
+  <meta name="generator" content="pandoc">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+  <title>Encontro Politécnico</title>
+  <style>
+    code{white-space: pre-wrap;}
+    span.smallcaps{font-variant: small-caps;}
+    span.underline{text-decoration: underline;}
+    div.column{display: inline-block; vertical-align: top; width: 50%;}
+    div.hanging-indent{margin-left: 1.5em; text-indent: -1.5em;}
+    ul.task-list{list-style: none;}
+  </style>
+  <link rel="stylesheet" href="./Encontro Politécnico_files/pandoc.css">
+<style type="text/css">.resize-observer[data-v-8859cc6c]{position:absolute;top:0;left:0;z-index:-1;width:100%;height:100%;border:none;background-color:transparent;pointer-events:none;display:block;overflow:hidden;opacity:0}.resize-observer[data-v-8859cc6c] object{display:block;position:absolute;top:0;left:0;height:100%;width:100%;overflow:hidden;pointer-events:none;z-index:-1}</style></head>
+<body ap-style="">
+<header id="title-block-header">
+<h1 class="title">Encontro Politécnico</h1>
+</header>
+<p>Dois professores (PA e PB)<a href="https://moj.naquadah.com.br/contests/jl_eda2_f1_2024_1/encontropolitecnico.html#fn1" class="footnote-ref" id="fnref1" role="doc-noteref"><sup>1</sup></a> combinaram de encontrar-se no Centro Politécnico (CP) às 15h00 numa quarta-feira. Como os professores são grandes estudiosos de movimentos retilíneos uniformes, pensaram em aplicar um de seus estudos mais recentes. Os dois professores dividiram o CP em um grande quadriculado. A cada passo, cada professor escolhe uma direção (Norte, Sul, Leste ou Oeste) e anda até o quadrado imediatamente vizinho na direção escolhida.</p>
+<p>O quadriculado do CP é um plano cartesiano com origem em <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math> como sendo o limite inferior esquerdo e as direções Norte e Sul andam no eixo Y, e as direções Leste e Oeste no eixo X. As direções Norte e Leste incrementam a posição de seus respectivos eixos e Sul e Oeste fazem o oposto.</p>
+<p>Dada uma sequência de passos, você deve dizer se os professores se encontraram em algum momento, i.e, se eles ficaram no mesmo quadrado ao mesmo tempo, se algum professor saiu do CP ou se eles não se encontraram.</p>
+<h2 id="entrada">Entrada</h2>
+<p>A primeira linha da entrada contém dois inteiros <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>N</mi><annotation encoding="application/x-tex">N</annotation></semantics></math> e <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>M</mi><annotation encoding="application/x-tex">M</annotation></semantics></math> que indicam respectivamente o número de colunas e o número de linhas do CP (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>1</mn><mo>≤</mo><mi>N</mi><mo>,</mo><mi>M</mi><mo>≤</mo><msup><mn>10</mn><mn>5</mn></msup></mrow><annotation encoding="application/x-tex">1 \leq N, M \leq 10^5</annotation></semantics></math>). A segunda linha contém um inteiro P (<math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>≤</mo><mi>P</mi><mo>≤</mo><mn>1000</mn></mrow><annotation encoding="application/x-tex">0 \leq P \leq 1000</annotation></semantics></math>) que indica quantos movimentos cada professor fez. Depois são apresentadas <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>P</mi><annotation encoding="application/x-tex">P</annotation></semantics></math> linhas contendo dois números inteiros <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> e <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math>, indicando a direção tomada pelos professores <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>A</mi></mrow><annotation encoding="application/x-tex">PA</annotation></semantics></math> e <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">PB</annotation></semantics></math>, respectivamente, naquele passo. Os inteiros <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>A</mi><annotation encoding="application/x-tex">A</annotation></semantics></math> e <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mi>B</mi><annotation encoding="application/x-tex">B</annotation></semantics></math> podem assumir os seguintes valores: <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>1</mn><annotation encoding="application/x-tex">1</annotation></semantics></math> (Norte), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>2</mn><annotation encoding="application/x-tex">2</annotation></semantics></math> (Sul), <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>3</mn><annotation encoding="application/x-tex">3</annotation></semantics></math> (Leste) e <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mn>4</mn><annotation encoding="application/x-tex">4</annotation></semantics></math> (Oeste). O professor <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>A</mi></mrow><annotation encoding="application/x-tex">PA</annotation></semantics></math> inicia seu trajeto sempre na posição <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mn>1</mn><mo>,</mo><mn>1</mn><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(1,1)</annotation></semantics></math> e o professor <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mi>B</mi></mrow><annotation encoding="application/x-tex">PB</annotation></semantics></math> na posição <math display="inline" xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mo stretchy="false" form="prefix">(</mo><mi>N</mi><mo>,</mo><mi>M</mi><mo stretchy="false" form="postfix">)</mo></mrow><annotation encoding="application/x-tex">(N,M)</annotation></semantics></math>.</p>
+<h2 id="saída">Saída</h2>
+<p>Seu programa deve imprimir:</p>
+<ul>
+<li>Caso os professores tenham se encontrado: as coordenadas do encontro e o passo em que ocorreu.</li>
+<li>Caso o(s) professor(es) tenha(m) saído do CP: as coordenadas em que saíram e o passo em que ocorreu. Se ambos professores saíram no mesmo passo imprima apenas a informação sobre o professor PA.</li>
+<li>Caso nenhuma das anteriores ocorra, imprimir: “Nao se encontraram”.</li>
+</ul>
+<p>Verifique os exemplos para entender melhor o formato da saída.</p>
+<h2 id="exemplos">Exemplos</h2>
+<h3 id="exemplo-de-entrada">Exemplo de entrada</h3>
+<pre><code>5 5
+4
+3 2
+3 2
+3 2
+3 4</code></pre>
+<h4 id="saída-para-o-exemplo-de-entrada-acima">Saída para o exemplo de entrada acima</h4>
+<pre><code>Nao se encontraram</code></pre>
+<h3 id="exemplo-de-entrada-1">Exemplo de entrada</h3>
+<pre><code>5 5
+4
+3 2
+3 2
+3 2
+3 2</code></pre>
+<h4 id="saída-para-o-exemplo-de-entrada-acima-1">Saída para o exemplo de entrada acima</h4>
+<pre><code>Encontraram-se na posicao (5,1) no passo 4</code></pre>
+<h3 id="exemplo-de-entrada-2">Exemplo de entrada</h3>
+<pre><code>5 5
+4
+1 2
+1 2
+4 1
+1 4</code></pre>
+<h4 id="saída-para-o-exemplo-de-entrada-acima-2">Saída para o exemplo de entrada acima</h4>
+<pre><code>PA saiu na posicao (0,3) no passo 3</code></pre>
+<div id="footer">
+<p>Author: Bruno Ribas</p>
+</div>
+<section class="footnotes" role="doc-endnotes">
+<hr>
+<ol>
+<li id="fn1" role="doc-endnote"><p>A saber: PA é o prof. Castellone, e PB é o prof. Anthov, ambos do DINF<a href="https://moj.naquadah.com.br/contests/jl_eda2_f1_2024_1/encontropolitecnico.html#fnref1" class="footnote-back" role="doc-backlink">↩︎</a></p></li>
+</ol>
+</section>
+
+
+<div class="ap-ext ap-ext-alibaba_search_by_image"><div class="ap-base ap-base--ltr ap-theme--dark skiptranslate"><!----><!----><!----><div><!----><div class="ap-sbi"><!----><!----><div class="ap-sbi-aside"><!----><div class="ap-sbi-aside-btn-minimize" style="display: none;"><img src="https://moj.naquadah.com.br/contests/jl_eda2_f1_2024_1/encontropolitecnico.html" class="ap-sbi-img-thumb"><i class="ap-sbi-aside-btn-minimize__icon ap-icon-chevron-right"></i></div><!----></div><!----></div><div class="ap-sbi-compare-bar-wrapper"><div class="ap-sbi-compare-bar__inner"><div class="ap-sbi-compare-bar-compared-list-wrapper"><div class="ap-sbi-compare-bar-next ap-sbi-compare-bar-next__prev ap-icon-chevron-left ap-is-disabled"></div><div class="ap-sbi-compare-bar-compared-list-container"><div class="ap-sbi-compare-bar-compared-list" style="width: 1000%; height: 100%; transform: translate3d(0px, 0px, 0px);"></div><!----></div><div class="ap-sbi-compare-bar-next ap-sbi-compare-bar-next__next ap-icon-chevron-right ap-is-disabled"></div></div><div class="ap-sbi-compare-bar-ctrls ap-sbi-compare-bar-ctrls__compare ap-is-disabled"> Comparar (0/20) </div><div class="ap-sbi-compare-bar-ctrls ap-sbi-compare-bar-ctrls__clear ap-is-disabled"> Limpar tudo </div><div title="Fechar" class="ap-sbi-compare-bar-ctrls ap-sbi-compare-bar-ctrls__close ap-icon-close"></div></div></div><!----></div><!----><div></div><!----><div></div><!----><!----><div></div><div></div><!----><div></div></div></div></body></html>
