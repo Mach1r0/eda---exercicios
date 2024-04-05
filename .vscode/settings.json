@@ -3,7 +3,8 @@
     "stdio.h": "c",
     "stdlib.h": "c",
     "array": "c",
-    "string_view": "c"
+    "string_view": "c",
+    "L - Listas encadeadas - Remoção.C": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled",
   "C_Cpp_Runner.cCompilerPath": "gcc",
