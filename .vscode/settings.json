@@ -4,7 +4,8 @@
     "stdlib.h": "c",
     "array": "c",
     "string_view": "c",
-    "L - Listas encadeadas - Remoção.C": "cpp"
+    "L - Listas encadeadas - Remoção.C": "cpp",
+    "D - Lugares no cinema.C": "cpp"
   },
   "C_Cpp.errorSquiggles": "disabled",
   "C_Cpp_Runner.cCompilerPath": "gcc",
