@@ -6,39 +6,39 @@ void swap(int* a, int* b) {
     *b = t;
 }
 
-int medianOfThree(int arr[], int low, int high) {
-    int mid = low + (high - low) / 2;
-    if (arr[mid] < arr[low]) {
-        swap(&arr[mid], &arr[low]);
+int medianOfThree(int arr[], int left, int right) {
+    int mid = left + (right - left) / 2;
+    if (arr[mid] < arr[left]) {
+        swap(&arr[mid], &arr[left]);
     }
-    if (arr[high] < arr[low]) {
-        swap(&arr[high], &arr[low]);
+    if (arr[right] < arr[left]) {
+        swap(&arr[right], &arr[left]);
     }
-    if (arr[mid] < arr[high]) {
-        swap(&arr[mid], &arr[high]);
+    if (arr[mid] < arr[right]) {
+        swap(&arr[mid], &arr[right]);
     }
-    return arr[high];
+    return arr[right];
 }
 
-int partition (int arr[], int low, int high) {
-    int pivot = medianOfThree(arr, low, high); 
-    int i = (low - 1); 
+int partition (int arr[], int left, int right) {
+    int pivot = medianOfThree(arr, left, right); 
+    int i = (left - 1); 
 
-    for (int j = low; j <= high - 1; j++) {
+    for (int j = left; j <= right - 1; j++) {
         if (arr[j] < pivot) {
             i++; 
             swap(&arr[i], &arr[j]);
         }
     }
-    swap(&arr[i + 1], &arr[high]);
+    swap(&arr[i + 1], &arr[right]);
     return (i + 1);
 }
 
-void quickSort(int arr[], int low, int high) {
-    if (low < high) {
-        int pi = partition(arr, low, high);
-        quickSort(arr, low, pi - 1);
-        quickSort(arr, pi + 1, high);
+void quickSort(int arr[], int left, int right) {
+    if (left < right) {
+        int pi = partition(arr, left, right);
+        quickSort(arr, left, pi - 1);
+        quickSort(arr, pi + 1, right);
     }
 }
 
