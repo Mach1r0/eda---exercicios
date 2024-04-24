@@ -40,24 +40,22 @@ void quicksortM3(item *v, int left, int right){
 }   
 
 int main(){
-    int QTDPRODUTO, PAGINA, QTSPRDPAGINA; 
-    scanf("%d %d %d", &QTDPRODUTO, &PAGINA, &QTSPRDPAGINA);
-    int arr[QTDPRODUTO];
-    for (int i = 0; i < QTDPRODUTO; i++){
-        scanf("%d", &arr[i]);
-    }
-    int iniciopagina = PAGINA * QTSPRDPAGINA;
-    int finalpagina = iniciopagina + QTSPRDPAGINA;
+    int n, p, x;
+    scanf(" %d %d %d", &n, &p, &x);
+    int *v = malloc(n * sizeof(int));
+    for (int i = 0; i < n; i++)
+        scanf(" %d", v + i);
 
-    if (finalpagina > QTDPRODUTO) {
-        finalpagina = QTDPRODUTO;
-    }
+    int startPage = min(n-1, p*x);
+    int endPage = min(n-1, (p+1)*x-1);
 
-    quickselect(arr, 0, QTDPRODUTO - 1, iniciopagina);
-    quickselect(arr, iniciopagina + 1, QTDPRODUTO - 1, finalpagina - 1);
-    quicksortM3(arr, iniciopagina, finalpagina - 1);
-    for (int i = iniciopagina; i < finalpagina && i < QTDPRODUTO; i++){
-        printf("%d ", arr[i]);
-    }
+    quickselect(v, 0, n-1, startPage);
+    quickselect(v, 0, n-1, endPage);
+    quicksortM3(v, startPage, endPage);
+
+    for (int i = startPage; i < min(n, (p+1)*x); i++)
+        printf("%d z\n", v[i]);
+
+    free(v);
     return 0;
 }
