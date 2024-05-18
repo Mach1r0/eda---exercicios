@@ -1,14 +1,13 @@
 #include<stdio.h>
 #include<stdlib.h>
-typedef int item;  
 
 typedef struct linkedlist{
     int dado; 
-    linkedlist* prox;
+    struct linkedlist* prox;
 } linkedlist; 
 
 typedef struct hash{
-    int data; 
+    linkedlist* data; 
     int key; 
 } hash;
 
@@ -24,27 +23,52 @@ void initArray(int size){
     }
     for (int i = 0; i < capacity; i++){
         array[i].key = 0; 
-        array[i].data = 0; 
+        array[i].data = NULL; 
     }
-};
+}
+
 int hashfunction(int x){
     return(x  % 13); 
-};
-int key = 13; 
-int insertion(int key, int x){
-    
+}
+
+linkedlist* insertion(int key, int x) {
     int index = hashfunction(key);
-    item* novo  = malloc(sizeof(item));
-    if (novo == NULL) return;     
-    if (array[index].data == 0){
-        array[index].data = x; 
+    linkedlist* new = malloc(sizeof(linkedlist));
+    if (new == NULL) return NULL;
+    new->dado = x;
+    new->prox = NULL;
+
+    if (array[index].data != NULL){
+        linkedlist* current = array[index].data;
+        //find the last node of linked list collision
+        while (current->prox != NULL){
+            current = current->prox;
+        } 
+        current->prox = new; // add new node on the end of list
+    } else {
+        // If no collision or key doesn't exist
+        array[index].data = new;
         array[index].key = key;
-        capacity++;
     }
-    else if(array[index].key == key){
-        array[index].data = x; 
+
+    return new;
+}
+
+int main(){
+    initArray(13);  
+    insertion(7, 7);
+    insertion(7, 9);  
+
+    for (int i = 0; i < capacity; i++) {
+        if (array[i].data != NULL) {
+            printf("%d -> ", array[i].key);
+            linkedlist* current = array[i].data;
+            while (current != NULL) {
+                printf("%d -> ", current->dado);
+                current = current->prox;
+            }
+            printf("\\\n");
+        }
     }
-    else {
-        array[index].data->prox = x;  
-    }
-};
+    return 0;
+}
