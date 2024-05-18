@@ -1,91 +1,110 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-typedef struct {
-  long long key;
-  int value;
-} Item;
+typedef struct pair {
+  int fst;
+  int snd;
+} pair;
 
-#define less(a, b) (a.value == b.value ? a.key < b.key : a.value < b.value)
-#define swap(a, b) { Item temp = *a; *a = *b; *b = temp; }
-#define cpmexch(a, b) { if (less(a, b)) swap(a,b); }
+typedef pair* Item;
 
-int medianOfThree(Item *v, int left, int right) {
-  int mid = (left + right) / 2;
-  cpmexch(&v[left], &v[mid]);
-  cpmexch(&v[left], &v[right]);
-  cpmexch(&v[mid], &v[right]);
-  return mid;
+int less(Item a, Item b) {
+  return a->fst == b->fst ? a->snd < b->snd : a->fst < b->fst; 
 }
 
-int partition(Item *v, int left, int right) {
-  int pivotIndex = medianOfThree(v, left, right);
-  Item pivot = v[pivotIndex];
-  swap(&v[pivotIndex], &v[right]);
-  int j = left - 1;
-  for (int k = left; k < right; k++) {
-    if (less(v[k], pivot)) {
-      j++;
-      swap(&v[j], &v[k]);
-    }
+#define lessmerge(a, b) a->snd < b->snd
+#define exchange(a, b)                                                         \
+  Item t = a;                                                                  \
+  a = b;                                                                       \
+  b = t;
+
+int partition(Item *v, int l, int r) {
+  int i = l - 1;
+  int j = r;
+  Item pivot = v[r];
+  for (;;) {
+    while (less(v[++i], pivot));
+
+    while (less(pivot, v[--j])) if(j==l) break;
+
+    if (i >= j)
+      break;
+
+    exchange(v[i], v[j]);
   }
-  swap(&v[j + 1], &v[right]);
-  return j + 1;
+  exchange(v[i], v[r]);
+  return i;
 }
 
-void insertionsort(Item *v, int left, int right) {
-    for (int i = left + 1; i <= right; i++) {
-        Item key = v[i];
-        int j = i - 1;
-        while (j >= left && less(key, v[j])) {
-            v[j + 1] = v[j];
-            j--;
-        }
-        v[j + 1] = key;
-    }
-}
-void quicksort(Item *v, int left, int right) {
-  if (right - left <= 32) {
-    insertionsort(v, left, right);
-    return;
-  }
-  if (left >= right) return;
-  int pivo = partition(v, left, right);
-  quicksort(v, left, pivo - 1);
-  quicksort(v, pivo + 1, right);
+void quick_select(Item *v, int l, int r, int k) {
+  if(l>=r) return;
+
+  int i = partition(v, l, r);
+
+  if (i > k)
+    quick_select(v, l, i - 1, k);
+  else if (i < k)
+    quick_select(v, i+1, r, k);
 }
 
-void quickselect(Item *v, int left, int right, int k) {
-  int pivo = partition(v, left, right);
-  if (pivo == k) return;
-  if (pivo > k) {
-    quickselect(v, left, pivo - 1, k);
-  } else {
-    quickselect(v, pivo + 1, right, k);
-  }
-}
+void merge(Item *v, int l, int r){// [l,r]
+    int mid = l + (r-l)/2;
+    int pl = l;
+    int pr = mid+1;
+    int p = 0;
+    Item *aux = (Item*) malloc(sizeof(Item)*(r-l+1));
 
-int main() {
-    int k;
-    scanf("%d", &k);
-
-    Item *items = malloc(10000000 * sizeof(Item));
-
-    if (items == NULL) {
-        printf("Memory allocation failed.\n");
-        return 1;
+    while(pl <= mid && pr <= r){
+        if(lessmerge(v[pl], v[pr]))
+            aux[p++] = v[pl++];
+        else
+            aux[p++] = v[pr++];
     }
 
-    int n;
-    for (n = 0; scanf("%d %d", &items[n].key, &items[n].value) == 2; n++);
+    while(pl <= mid)
+        aux[p++] = v[pl++];
 
-    quickselect(items, 0, n - 1, k - 1);
-    quicksort(items, 0, k - 1);
+    while(pr <= r)
+        aux[p++] = v[pr++];
+    
+    p = 0;
+    for(int i = l; i <= r; ++i)
+        v[i] = aux[p++];
 
-    for (int i = 0; i < k; i++)
-        printf("%d %d\n", items[i].key, items[i].value);
+    free(aux);
+}
 
-    free(items);
+void merge_sort(Item *v, int l , int r){// [l, r]
+    if(l >= r) return;
 
-    return 0;
+    int mid = l + (r-l)/2;
+
+    merge_sort(v, l, mid);
+    merge_sort(v, mid+1 ,r);
+
+    merge(v, l, r);
+}
+
+int main(void) {
+  // entrada.
+  int k;
+  scanf("%d", &k);
+  Item *xs = (Item*) malloc(sizeof(Item)*((int)1e7+1));
+  int cnt = 0;
+  int n, s;
+  while (scanf("%d %d", &s, &n) != EOF) {
+    xs[cnt] = (Item) malloc(sizeof(pair));
+    xs[cnt]->fst = n;
+    xs[cnt]->snd = s;
+    cnt++;
+  }
+
+  quick_select(xs, 0, cnt - 1, k);
+  merge_sort(xs, 0, k-1);
+
+  for (int i = 0; i < k; ++i) {
+    printf("%d %d\n", xs[i]->snd, xs[i]->fst);
+    free(xs[i]);
+  }
+  free(xs);
 }
