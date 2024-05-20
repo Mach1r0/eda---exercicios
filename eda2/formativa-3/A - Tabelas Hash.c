@@ -4,7 +4,7 @@
 //create struct for linked list
 typedef struct linkedlist{
     int dado; 
-    struct linkedlist* prox;
+    linkedlist* prox;
 } linkedlist; 
 
 // struct for hash values

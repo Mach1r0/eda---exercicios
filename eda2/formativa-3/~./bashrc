@@ -1,0 +1,4 @@
+c() {
+  gcc ./$1 -O2 -Wno-unused-result -o /tmp/binaryBuild.o
+  time /tmp/binaryBuild.o ${@:2}
+}

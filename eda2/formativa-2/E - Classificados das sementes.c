@@ -86,7 +86,6 @@ void merge_sort(Item *v, int l , int r){// [l, r]
 }
 
 int main(void) {
-  // entrada.
   int k;
   scanf("%d", &k);
   Item *xs = (Item*) malloc(sizeof(Item)*((int)1e7+1));
