@@ -85,26 +85,26 @@ bag* insertIntoHashTable(ULL key, LL data) {
 }
 
 void removeFromHashTable(ULL key, LL data) {
-  ULL index = computeHashIndex(key, MAX_ITEMS);
-  bag* current = hashTable[index].data;
-  bag* prev = NULL;
+    ULL index = computeHashIndex(key, MAX_ITEMS);
+    bag* current = hashTable[index].data;
+    bag* prev = NULL;
 
-  while (current != NULL && current->code != key) {
-    prev = current;
-    current = current->next;
-  }
-
-  if (current != NULL) {
-    current->data -= data;
-    if (current->data <= 0) {
-      if (prev != NULL) {
-        prev->next = current->next;
-      } else {
-        hashTable[index].data = current->next;
-      }
-      free(current);
+    while (current != NULL && current->code != key) {
+        prev = current;
+        current = current->next;
     }
-  }
+
+    if (current != NULL) {
+        current->data -= data;
+        if (current->data <= 0) { // Adjusted condition
+            if (prev != NULL) {
+                prev->next = current->next;
+            } else {
+                hashTable[index].data = current->next;
+            }
+            free(current);
+        }
+    }
 }
 
 // Consider load factor management or pre-sizing if needed
@@ -113,7 +113,9 @@ LL countTotalItems() {
   for (LL i = 0; i < MAX_ITEMS; i++) {
     bag* current = hashTable[i].data;
     while (current != NULL) {
-      total += current->data;
+      if (current->data > 0) {
+        total += current->data;
+      }
       current = current->next;
     }
   }
@@ -124,44 +126,34 @@ void solve() {
     LL n;
     scanf("%lld", &n);
     initHashTable(MAX_ITEMS);
-    RANDOM = (ULL)time(NULL); 
+    RANDOM = (ULL)time(NULL);
 
     for (LL i = 0; i < n; i++) {
         LL data;
         ULL code;
         scanf("%llu %lld", &code, &data);
-        if (data > 0) {
-            insertIntoHashTable(code, data);
-        } else {
-            removeFromHashTable(code, -data);
+                if (data > 0) {
+                    insertIntoHashTable(code, data);
+                } else {
+                    removeFromHashTable(code, -data);
+                }
+            }
+
+            LL items = countTotalItems();
+            printf("%lld\n", items);
+
+            for (LL i = 0; i < MAX_ITEMS; i++) {
+                bag* current = hashTable[i].data;
+                while (current != NULL) {
+                    bag* temp = current;
+                    current = current->next;
+                    free(temp);
+                }
+            }
+            free(hashTable);
         }
-    }
 
-    LL items = countTotalItems();
-    printf("%lld\n", items);
-
-    for (LL i = 0; i < MAX_ITEMS; i++) {
-        bag* current = hashTable[i].data;
-        while (current != NULL) {
-            bag* temp = current;
-            current = current->next;
-            free(temp);
+        int main(){
+            solve();
+            return 0; 
         }
-    }
-    free(hashTable);
-}
-int main() {
-    clock_t start, end;
-    double cpu_time_used;
-
-    start = clock();
-
-    solve();
-
-    end = clock();
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
-
-    printf("Tempo de execução: %f segundos\n", cpu_time_used);
-
-    return 0;
-}
